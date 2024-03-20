@@ -1,24 +1,29 @@
 version: '3.8'
 services:
-  frontend:
-    depends_on:
-      - deploy
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-    ports:
-      - 3000:3000
-
   anvil:
+    container_name: anvil
     build:
       context: ./smartcontracts
       dockerfile: Dockerfile.anvil
+    networks:
+      - hackaton-template
+    volumes:
+      - shared-volume:/develop/generated
     ports:
       - 8545:8545
-
-  deploy:
-    depends_on:
-      - anvil
+  frontend:
     build:
-      context: ./smartcontracts
-      dockerfile: Dockerfile.deploy
+      context: ./frontend
+      dockerfile: Dockerfile
+    volumes:
+      - shared-volume:/app/generated
+    networks:
+      - hackaton-template
+    ports:
+      - 3000:3000
+
+networks:
+  hackaton-template:
+    name: hackaton-template
+volumes:
+  shared-volume:

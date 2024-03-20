@@ -4,4 +4,5 @@ WORKDIR /develop
 COPY . .
 
 RUN forge b --skip test
-CMD ["forge script script/deploy.local.s.sol:Local -f http://anvil:8545 --broadcast"]
+#RUN forge script script/deploy.local.s.sol:Local -f http://anvil:8545 --broadcast
+ENTRYPOINT ["tail", "-f", "/dev/null"]

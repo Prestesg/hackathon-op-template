@@ -1,3 +1,11 @@
 FROM ghcr.io/foundry-rs/foundry
 
-ENTRYPOINT [ "anvil", "--host", "0.0.0.0", "-b", "3" ]
+WORKDIR /develop
+COPY . .
+
+RUN forge b --skip test
+
+CMD [ "anvil", "--host", "0.0.0.0", "-b", "3" ]
+
+##RODAR NA MÃO DENTRO DO COINATINER 
+# forge script script/deploy.local.s.sol:Local -f http://localhost:8545 --broadcast
